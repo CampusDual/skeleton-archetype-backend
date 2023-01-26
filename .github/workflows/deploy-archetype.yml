@@ -33,11 +33,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y xmlstarlet
-      - name: Eliminate unnecessary properties from pom and workflow folder
+      - name: Create changes in project before creating archetype
         run: |
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -d "/x:project/x:properties/x:sonar.organization" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -d "/x:project/x:properties/x:sonar.host.url" pom.xml
           rm -rf .github/
+          rm -rf README.md
+          mv HELP.md README.md
       - name: Generate archetype from project
         run: |
           mvn -B clean
