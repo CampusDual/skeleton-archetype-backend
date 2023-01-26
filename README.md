@@ -1,5 +1,5 @@
 # Aplicación base arquetipo SpringBoot Campus Dual
-Esta aplicación es una **aplicación base** que se usa para generar el arquetipo que usan los alumnos de Campus Dual. 
+Esta aplicación es una **aplicación base** que se usa para generar el arquetipo que usan los alumnos de Campus Dual. Esto significa que cualquier cambio que se desee hacer al arquetipo, se debe hacer en esta aplicación, que generará el nuevo arquetipo a partir de su estructura e información. 
 
 El arquetipo se genera a través de *GitHub Actions*. Estas actions están guardadas en la carpeta <code>.github</code> por
 lo que **esta carpeta no debe de modificarse**. También contiene otra action para escanear el código fuente contra 
