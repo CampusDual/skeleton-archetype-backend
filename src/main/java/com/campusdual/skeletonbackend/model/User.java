@@ -1,10 +1,10 @@
 package com.campusdual.skeletonbackend.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
+@Entity(name = "users")
 public class User {
 
     @Id
@@ -27,6 +27,14 @@ public class User {
 
     @Column
     private String password;
+
+    @ManyToMany
+    @JoinTable(name = "users_profiles_map", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "profile_id") })
+    private Set<Profile> profiles = new HashSet<>();
+
+    public User() {
+    }
 
     public User(int id, String nif, String name, String surname1, String surname2, String login, String password) {
         this.id = id;
@@ -92,5 +100,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Section> getSections() {
+        Set<Section> sections = new HashSet<>();
+        for (Profile profile : profiles) {
+            sections.addAll(profile.getSections());
+        }
+        return sections;
     }
 }

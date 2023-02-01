@@ -33,3 +33,10 @@ logging:
         descriptor:
           sql:
             BasicBinder: TRACE
+security:
+  oauth2:
+    client:
+      clientId: demo
+      clientSecret: 8Fjkk59bXKws8bmMNFZB
+      authorized-grant-types: password,authorization_code,refresh_code,implicit
+      scope: openid
