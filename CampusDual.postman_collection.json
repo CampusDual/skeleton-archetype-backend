@@ -1,0 +1,240 @@
+{
+	"info": {
+		"_postman_id": "aa479833-7abf-4e9e-b34a-595ee6d62893",
+		"name": "Campus Dual",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2681374"
+	},
+	"item": [
+		{
+			"name": "Contact insert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Sarene\",\r\n    \"surname1\": \"Venture\",\r\n    \"surname2\": \"Cett\",\r\n    \"phone\": \"999888777\",\r\n    \"email\": \"sventure@elantris.bs\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:30030/contacts/add",
+					"host": [
+						"localhost"
+					],
+					"port": "30030",
+					"path": [
+						"contacts",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contact test",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Sarene\",\r\n    \"surname1\": \"Venture\",\r\n    \"surname2\": \"Cett\",\r\n    \"phone\": \"999888777\",\r\n    \"email\": \"sventure@elantris.bs\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:30030/contacts/testController",
+					"host": [
+						"localhost"
+					],
+					"port": "30030",
+					"path": [
+						"contacts",
+						"testController"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contact get all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Sarene\",\r\n    \"surname1\": \"Venture\",\r\n    \"surname2\": \"Cett\",\r\n    \"phone\": \"999888777\",\r\n    \"email\": \"sventure@elantris.bs\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:30030/contacts/getAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30030",
+					"path": [
+						"contacts",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contact get",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"id\": 29\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:30030/contacts/get",
+					"host": [
+						"localhost"
+					],
+					"port": "30030",
+					"path": [
+						"contacts",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contact update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 30,\r\n    \"name\": \"Sarene\",\r\n    \"surname1\": \"Teod\",\r\n    \"surname2\": \"Arelon\",\r\n    \"phone\": \"999888777\",\r\n    \"email\": \"steod@elantris.bs\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:30030/contacts/update",
+					"host": [
+						"localhost"
+					],
+					"port": "30030",
+					"path": [
+						"contacts",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contact delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 30\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:30030/contacts/delete",
+					"host": [
+						"localhost"
+					],
+					"port": "30030",
+					"path": [
+						"contacts",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get token",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "8Fjkk59bXKws8bmMNFZB",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "demo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "demo",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "demouser",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9999/oauth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
