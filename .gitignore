@@ -213,3 +213,4 @@ nbdist/
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,eclipse,intellij+all,netbeans
 src/main/resources/db/templateDB.lck
 src/main/resources/db/templateDB.properties
+*.iml
