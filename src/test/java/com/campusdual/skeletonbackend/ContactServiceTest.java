@@ -14,11 +14,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -44,9 +43,10 @@ class ContactServiceTest {
 		contactsList.add(contactThree);
 
 		when(this.contactDao.findAll()).thenReturn(contactsList);
-		
+
 		List<ContactDTO> empList = contactService.queryAllContact();
 
+		verify(contactDao, times(1)).findAll();
 		assertEquals(3, empList.size());
 	}
 
@@ -91,6 +91,8 @@ class ContactServiceTest {
 		when(this.contactDao.saveAndFlush(any(Contact.class))).thenReturn(contact);
 		int contactInsertedId = contactService.insertContact(createContactDTO);
 
+		verify(contactDao, times(0)).findAll();
+		verify(contactDao, times(1)).saveAndFlush(any(Contact.class));
 		assertNotNull(contactInsertedId);
 		assertEquals(1, contactInsertedId);
 	}
