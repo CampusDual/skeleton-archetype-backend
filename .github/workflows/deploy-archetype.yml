@@ -1,5 +1,11 @@
 name: Deploy Campus Dual backend archetype
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      custom-version:
+        type: string
+        description: 'Optional. If you want it to have an additional specific version other than 99.9.9-SNAPSHOT, write it down.'
+        required: false
 jobs:
   Deploy-Campus-Dual-backend-archetype:
     runs-on: ubuntu-latest
@@ -136,6 +142,12 @@ jobs:
       - name: Deploy archetype
         run: |
           cd target/generated-sources/archetype
+          mvn -B deploy -Pgenerate-version
+      - name: Deploy custom version archetype
+        if: "${{ github.event.inputs.custom-version != '' }}"
+        run: |
+          cd target/generated-sources/archetype
+          mvn -B versions:set -DnewVersion=${{ github.event.inputs.custom-version }} versions:commit
           mvn -B deploy -Pgenerate-version
       - name: Generating backend from current archetype (Test)
         run: |
