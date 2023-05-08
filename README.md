@@ -1,4 +1,4 @@
-[![Backend Archetype](https://img.shields.io/maven-central/v/com.campusdual/skeleton-backend-archetype?label=Latest%20Ontimize%20Boot%20archetype&style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.campusdual/skeleton-backend-archetype)
+[![Backend Archetype](https://img.shields.io/maven-central/v/com.campusdual/skeleton-backend-archetype?label=Latest%20backend%20archetype&style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.campusdual/skeleton-backend-archetype)
 
 # Aplicación base arquetipo SpringBoot Campus Dual
 Esta aplicación es una **aplicación base** que se usa para generar el arquetipo que usan los alumnos de Campus Dual. Esto significa que cualquier cambio que se desee hacer al arquetipo, se debe hacer en esta aplicación, que generará el nuevo arquetipo a partir de su estructura e información. 
