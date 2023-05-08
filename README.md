@@ -15,7 +15,7 @@ lo que **esta carpeta no debe de modificarse**. También contiene otra action pa
 ## ¿Cómo usar el arquetipo?
 El arquetipo lo podemos usar ejecutando el siguiente comando de Maven en la carpeta que queramos ubicar el proyecto
 ```
-mvn -B archetype:generate -DgroupId=YOUR_PROJECT_GROUP_ID -DartifactId=YOUR_PROJECT_ARTIFACT_ID -Dversion=YOUR_PROJECT_VERSION -Dpackage=YOUR_PROJECT_PACKAGE -DarchetypeGroupId=com.campusdual -DarchetypeArtifactId=skeleton-backend-archetype -DarchetypeVersion=1.0.0-SNAPSHOT -DinteractiveMode=false
+mvn -B archetype:generate -DgroupId=YOUR_PROJECT_GROUP_ID -DartifactId=YOUR_PROJECT_ARTIFACT_ID -Dversion=YOUR_PROJECT_VERSION -Dpackage=YOUR_PROJECT_PACKAGE -DarchetypeGroupId=com.campusdual -DarchetypeArtifactId=skeleton-backend-archetype -DarchetypeVersion=99.9.9-SNAPSHOT -DinteractiveMode=false
 ```
 ## ¿Cómo probar el arquetipo?
 #### Descargando el fichero que se genera en GitHub Action
@@ -24,6 +24,6 @@ Descarga y descomprime (extensión *\*.tar.gz*) el fichero **backend-zip** que s
 #### Ejecutando el comando Maven
 Ejecutar el siguiente comando Maven, que es el mismo que ejecuta la GitHub Action del paso anterior
 ```
-mvn -B archetype:generate -DgroupId=com.campusdual -DartifactId=backendtest -Dversion=1.0.0-SNAPSHOT -Dpackage=com.campusdual.backendtest -DarchetypeGroupId=com.campusdual -DarchetypeArtifactId=skeleton-backend-archetype -DarchetypeVersion=1.0.0-SNAPSHOT -DinteractiveMode=false
+mvn -B archetype:generate -DgroupId=com.campusdual -DartifactId=backendtest -Dversion=1.0.0-SNAPSHOT -Dpackage=com.campusdual.backendtest -DarchetypeGroupId=com.campusdual -DarchetypeArtifactId=skeleton-backend-archetype -DarchetypeVersion=99.9.9-SNAPSHOT -DinteractiveMode=false
 ```
 
