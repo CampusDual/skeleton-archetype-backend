@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
-public class ContactsControllerTest {
+class ContactsControllerTest {
 
     private MockMvc mockMvc;
     @InjectMocks
@@ -38,13 +38,13 @@ public class ContactsControllerTest {
     ContactService contactService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(contactsController)
                 .build();
     }
 
     @Test
-    public void addContactTest() throws Exception {
+    void addContactTest() throws Exception {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/contacts/add").contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(new Contact("John"))))
                 .andReturn();
@@ -53,7 +53,7 @@ public class ContactsControllerTest {
     }
 
     @Test
-    public void getAllContactsTest() throws Exception {
+    void getAllContactsTest() throws Exception {
         List<ContactDTO> contactsList = new ArrayList<ContactDTO>();
 
         ContactDTO contactOne = new ContactDTO();
