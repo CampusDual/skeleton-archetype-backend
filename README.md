@@ -1,7 +1,7 @@
 [![Backend Archetype](https://img.shields.io/maven-central/v/com.campusdual/skeleton-backend-archetype?label=Latest%20backend%20archetype&style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.campusdual/skeleton-backend-archetype)
 
 # SpringBoot Campus Dual archetype base application
-This application is a **base application** which is used to generate the archetype used by Campus Daul students. This means that any changes you want to make to the archetype must be made in this application, which will generate the new archetype from its structure and information. 
+This application is a **base application** which is used to generate the archetype used by Campus Dual students. This means that any changes you want to make to the archetype must be made in this application, which will generate the new archetype from its structure and information. 
 
 The archetype is generated through *GitHub Actions*. These actions are stored in the <code>.github</code> folder so **this folder should not be modified**. It also contains another action to scan the source code against *SonarCloud* after doing a *push* against main or a *pull request*.
 
