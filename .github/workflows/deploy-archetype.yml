@@ -1,5 +1,11 @@
 name: Deploy Campus Dual backend archetype
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      custom-version:
+        type: string
+        description: 'Optional. If you want it to have an additional specific version other than 99.9.9-SNAPSHOT, write it down.'
+        required: false
 jobs:
   Deploy-Campus-Dual-backend-archetype:
     runs-on: ubuntu-latest
@@ -52,9 +58,18 @@ jobs:
       - name: Generate deploy pom.xml with xmlstarlet
         run: |
           cd target/generated-sources/archetype
+          cat pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -a "/x:project/x:name" -t elem -n "organization" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:organization" -t elem -n "name" -v "Campus Dual" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:organization" -t elem -n "url" -v "http://campusdual.com" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -u "/x:project/x:url" -v "https://github.com/CampusDual/skeleton-archetype-backend" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -u "/x:project/x:developers/x:developer[1]/x:name" -v "Pablo Martínez Kirsten" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -u "/x:project/x:developers/x:developer[1]/x:email" -v "pablo.martinez@imatia.com" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -u "/x:project/x:developers/x:developer[1]/x:organization" -v "Imatia Innovation" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -u "/x:project/x:developers/x:developer[1]/x:organizationUrl" -v "http://imatia.com" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:scm" -t elem -n "connection" -v "scm:git:git://github.com/CampusDual/skeleton-archetype-backend.git" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:scm" -t elem -n "developerConnection" -v "scm:git:ssh://github.com:CampusDual/skeleton-archetype-backend.git" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -u "/x:project/x:scm/x:url" -v "https://github.com/CampusDual/skeleton-archetype-backend/tree/main" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:build/x:pluginManagement/x:plugins" -t elem -n "plugin" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:build/x:pluginManagement/x:plugins/x:plugin[1]" -t elem -n "configuration" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:build/x:pluginManagement/x:plugins/x:plugin[1]/x:configuration" -t elem -n "useDefaultExcludes" -v "false" pom.xml
@@ -127,15 +142,28 @@ jobs:
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]" -t elem -n "groupId" -v "org.apache.maven.plugins" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]" -t elem -n "artifactId" -v "maven-gpg-plugin" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]" -t elem -n "version" -v "3.0.1" pom.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]" -t elem -n "configuration" pom.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:configuration" -t elem -n "gpgArguments"  pom.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:configuration/x:gpgArguments" -t elem -n "arg" -v "--pinentry-mode" pom.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:configuration/x:gpgArguments" -t elem -n "arg" -v "loopback" pom.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:configuration" -t elem -n "keyname" -v "\${gpg.keyname}" pom.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:configuration" -t elem -n "passphraseServerId" -v "\${gpg.passphrase}" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]" -t elem -n "executions" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions" -t elem -n "execution" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions/x:execution" -t elem -n "id" -v "sign-artifacts" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions/x:execution" -t elem -n "phase" -v "verify" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions/x:execution" -t elem -n "goals" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions/x:execution/x:goals" -t elem -n "goal" -v "sign" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions/x:execution" -t elem -n "configuration" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions/x:execution/x:configuration" -t elem -n "gpgArguments"  pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions/x:execution/x:configuration/x:gpgArguments" -t elem -n "arg" -v "--pinentry-mode" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions/x:execution/x:configuration/x:gpgArguments" -t elem -n "arg" -v "loopback" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions/x:execution/x:configuration" -t elem -n "keyname" -v "\${gpg.keyname}" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions/x:execution/x:configuration" -t elem -n "passphraseServerId" -v "\${gpg.passphrase}" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]/x:executions/x:execution/x:configuration" -t elem -n "passphraseServerId" -v "\${gpg.passphrase}" pom.xml
       - name: Deploy archetype
         run: |
           cd target/generated-sources/archetype
+          mvn -B deploy -Pgenerate-version
+      - name: Deploy custom version archetype
+        if: "${{ github.event.inputs.custom-version != '' }}"
+        run: |
+          cd target/generated-sources/archetype
+          mvn -B versions:set -DnewVersion=${{ github.event.inputs.custom-version }} versions:commit
           mvn -B deploy -Pgenerate-version
       - name: Generating backend from current archetype (Test)
         run: |
