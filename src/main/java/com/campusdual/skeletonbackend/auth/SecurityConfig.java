@@ -2,52 +2,55 @@ package com.campusdual.skeletonbackend.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.sql.DataSource;
-
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private static final String USER_QUERY= "SELECT LOGIN, PASSWORD, TRUE AS ENABLED FROM USERS WHERE LOGIN = ?";
-    private static final String USER_ROLE_QUERY = "SELECT U.LOGIN, R.ROLE_NAME FROM USER_ROLES UR INNER JOIN USERS U ON U.ID = UR.USER_ID INNER JOIN ROLES R ON R.ID = UR.ROLE_ID WHERE LOGIN = ?";
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
-    DataSource dataSource;
+    private AuthEntryPointJwt authEntryPointJwt;
 
     @Bean
-    protected AuthenticationManager configureAuthenticationManager (HttpSecurity http) throws Exception {
-
-        return http
-                .getSharedObject(AuthenticationManagerBuilder.class)
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery(USER_QUERY)
-                .authoritiesByUsernameQuery(USER_ROLE_QUERY)
-                .passwordEncoder(new BCryptPasswordEncoder())
-                .and().build();
+    public AuthJWTTokenFilter authenticationJwtTokenFilter() {
+        return new AuthJWTTokenFilter();
     }
 
     @Bean
-    protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .formLogin().disable()
+                .cors().and()
                 .csrf().disable()
-                .httpBasic()
+                .exceptionHandling()
+                .authenticationEntryPoint(this.authEntryPointJwt)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/test/**", "/public/**").permitAll()
+                .antMatchers("/auth/**","/test/all", "/public/**").permitAll()
                 .antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .addFilterBefore(this.authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
