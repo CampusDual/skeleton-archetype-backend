@@ -27,8 +27,6 @@ jobs:
           server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_CENTRAL_TOKEN
-          gpg-private-key: secrets.MAVEN_GPG_PRIVATE_KEY
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
       - name: Setup xmlstarlet
         run: |
           sudo apt-get update
