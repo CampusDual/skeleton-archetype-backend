@@ -1,0 +1,41 @@
+name: Test Maven settings.xml
+on: workflow_dispatch
+jobs:
+  Generate-settings:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: secrets.GITHUB_TOKEN
+      CI_COMMIT_AUTHOR: secrets.CI_COMMIT_AUTHOR
+      CI_COMMIT_MAIL: secrets.CI_COMMIT_MAIL
+      MAVEN_USERNAME: secrets.MAVEN_USERNAME
+      MAVEN_CENTRAL_TOKEN: secrets.MAVEN_CENTRAL_TOKEN
+      MAVEN_GPG_PASSPHRASE: secrets.MAVEN_GPG_PASSPHRASE
+    steps:
+      - name: Get input parameters
+        run: |
+          echo "BRANCH=${{ github.ref }}" >> $GITHUB_ENV
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH }}
+          fetch-depth: 0
+      - name: Setup Java JDK and Maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_CENTRAL_TOKEN
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+      - name: Setup xmlstarlet
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xmlstarlet
+      - name: Show settings.xml
+        run: cat ~/.m2/settings.xml
+      - name: Modify settings.xml
+        run: echo "XMLSTARLET"
+      - name: Show settings.xml
+        run: cat ~/.m2/settings.xml
