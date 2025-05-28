@@ -12,6 +12,12 @@ The archetype is generated through *GitHub Actions*. These actions are stored in
 
 ## How to use the archetype?
 The archetype can be used by executing the following Maven command in the folder where we want to place the project.
+> **_NOTE:_**  Change _YOUR_PROJECT_GROUP_ID_, _YOUR_PROJECT_ARTIFACT_ID_, _YOUR_PROJECT_VERSION_, _YOUR_PROJECT_PACKAGE_ and _LAST_VERSION_ (in RELEASE version) by your own desired values
+### Last RELEASE version (without the v): [![Backend Archetype](https://img.shields.io/maven-central/v/com.campusdual/skeleton-backend-archetype?label=&style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.campusdual/skeleton-backend-archetype)
+```
+mvn -B archetype:generate -DgroupId=YOUR_PROJECT_GROUP_ID -DartifactId=YOUR_PROJECT_ARTIFACT_ID -Dversion=YOUR_PROJECT_VERSION -Dpackage=YOUR_PROJECT_PACKAGE -DarchetypeGroupId=com.campusdual -DarchetypeArtifactId=skeleton-backend-archetype -DarchetypeVersion=LAST_VERSION -DinteractiveMode=false
+```
+### Latest version
 ```
 mvn -B archetype:generate -DgroupId=YOUR_PROJECT_GROUP_ID -DartifactId=YOUR_PROJECT_ARTIFACT_ID -Dversion=YOUR_PROJECT_VERSION -Dpackage=YOUR_PROJECT_PACKAGE -DarchetypeGroupId=com.campusdual -DarchetypeArtifactId=skeleton-backend-archetype -DarchetypeVersion=99.9.9-SNAPSHOT -DinteractiveMode=false
 ```
@@ -31,11 +37,11 @@ This error occurs becase the command is trying to get the *latest* version (*99.
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
   <profiles>
 	<profile>
-		<id>ossrh</id>
+		<id>central</id>
 		<repositories>
 			<repository>
-				<id>ossrh-snapshot</id>
-				<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+				<id>central-snapshot</id>
+				<url>https://central.sonatype.com/repository/maven-snapshots/</url>
 				<snapshots>
 					<enabled>true</enabled>
 				</snapshots>
@@ -44,7 +50,7 @@ This error occurs becase the command is trying to get the *latest* version (*99.
 	</profile>
   </profiles>
   <activeProfiles>
-	<activeProfile>ossrh</activeProfile>
+	<activeProfile>central</activeProfile>
   </activeProfiles>
 </settings>
 ```
