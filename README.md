@@ -29,7 +29,18 @@ We use this version as ***latest*** version, so that this version can always be 
 ## Can I deploy a final version instead of 99.9.9-SNAPSHOT?
 Of course, when executing the action, the version to be deployed must be indicated in the input. You must know the last version deployed to write the next corresponding version. It will generate the version 99.9.9-SNASHOT, it will change the version for the indicated one and it will deploy in *Maven Central* a version with that numbering. There is **NO NEED** to change the version of the project at any time.
 
-## When I try to use the archetype, it responds that the version is not found.
+## How to test the archetype?
+#### Downloading the file that is generated in GitHub Action
+Download and unzip (extension *\*.tar.gz*) the **backend-zip** file that is added to the summary of the archetype deployment action execution to have a folder with the project created.
+![image](https://i.imgur.com/DOpyK5M.png)
+#### Running the Maven command
+Execute the following Maven command, which is the same command that executes the GitHub Action from the previous step.
+```
+mvn -B archetype:generate -DgroupId=com.campusdual -DartifactId=backendtest -Dversion=1.0.0-SNAPSHOT -Dpackage=com.campusdual.backendtest -DarchetypeGroupId=com.campusdual -DarchetypeArtifactId=skeleton-backend-archetype -DarchetypeVersion=99.9.9-SNAPSHOT -DinteractiveMode=false
+```
+
+## FAQ
+### When I try to use the archetype, it responds that the version is not found.
 This error occurs becase the command is trying to get the *latest* version (*99.9.9-SNAPSHOT*). This problem occurs because by default, ***SNAPSHOT versions cannot be accessed from Maven Central***. For it, it is necessary to activate, in the *settings.xml* file, the access to the SNAPSHOT versions of Maven Central. In case we do not have this file, we have to create it ***inside*** the .m2 folder (*by default, it is in the following path: ~/.m2*). [Here is an example](https://gist.github.com/supportcampusdual/fa55eb0fa7fd91f825abcc557a1f730d) of the *settings.xml* file content to enable SNAPSHOT versions:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -55,16 +66,7 @@ This error occurs becase the command is trying to get the *latest* version (*99.
   </activeProfiles>
 </settings>
 ```
-In case you do not allow the use of SNAPSHOT versions, the latest available release version can be used. In this case, replace the SNAPSHOT version of the archetype (-DarchetypeVersion=99.9.9-SNAPSHOT), with the latest release version, which is the following (without the v): [![Backend Archetype](https://img.shields.io/maven-central/v/com.campusdual/skeleton-backend-archetype?label=&style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.campusdual/skeleton-backend-archetype) 
+In case you do not allow the use of SNAPSHOT versions, the latest available release version can be used. In this case, replace the SNAPSHOT version of the archetype (-DarchetypeVersion=99.9.9-SNAPSHOT), with the latest release version, which is the following (without the v): [![Backend Archetype](https://img.shields.io/maven-central/v/com.campusdual/skeleton-backend-archetype?label=&style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.campusdual/skeleton-backend-archetype)
 
 > **_NOTE:_**  The release version may not have the latest changes made to the archetype.
 
-## How to test the archetype?
-#### Downloading the file that is generated in GitHub Action
-Download and unzip (extension *\*.tar.gz*) the **backend-zip** file that is added to the summary of the archetype deployment action execution to have a folder with the project created.
-![image](https://i.imgur.com/DOpyK5M.png)
-#### Running the Maven command
-Execute the following Maven command, which is the same command that executes the GitHub Action from the previous step.
-```
-mvn -B archetype:generate -DgroupId=com.campusdual -DartifactId=backendtest -Dversion=1.0.0-SNAPSHOT -Dpackage=com.campusdual.backendtest -DarchetypeGroupId=com.campusdual -DarchetypeArtifactId=skeleton-backend-archetype -DarchetypeVersion=99.9.9-SNAPSHOT -DinteractiveMode=false
-```
