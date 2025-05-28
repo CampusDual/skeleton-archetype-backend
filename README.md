@@ -12,7 +12,8 @@ The archetype is generated through *GitHub Actions*. These actions are stored in
 
 ## How to use the archetype?
 The archetype can be used by executing the following Maven command in the folder where we want to place the project.
-> **_NOTE:_**  Change _YOUR_PROJECT_GROUP_ID_, _YOUR_PROJECT_ARTIFACT_ID_, _YOUR_PROJECT_VERSION_, _YOUR_PROJECT_PACKAGE_ and _LAST_VERSION_ (in RELEASE version) by your own desired values
+> [!WARNING]
+> Change _YOUR_PROJECT_GROUP_ID_, _YOUR_PROJECT_ARTIFACT_ID_, _YOUR_PROJECT_VERSION_, _YOUR_PROJECT_PACKAGE_ and _LAST_VERSION_ (in RELEASE version) by your own desired values
 ### Last RELEASE version (without the v): [![Backend Archetype](https://img.shields.io/maven-central/v/com.campusdual/skeleton-backend-archetype?label=&style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.campusdual/skeleton-backend-archetype)
 ```
 mvn -B archetype:generate -DgroupId=YOUR_PROJECT_GROUP_ID -DartifactId=YOUR_PROJECT_ARTIFACT_ID -Dversion=YOUR_PROJECT_VERSION -Dpackage=YOUR_PROJECT_PACKAGE -DarchetypeGroupId=com.campusdual -DarchetypeArtifactId=skeleton-backend-archetype -DarchetypeVersion=LAST_VERSION -DinteractiveMode=false
