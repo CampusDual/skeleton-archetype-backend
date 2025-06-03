@@ -1,4 +1,5 @@
-[![Backend Archetype](https://img.shields.io/maven-central/v/com.campusdual/skeleton-backend-archetype?label=Latest%20backend%20archetype&style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.campusdual/skeleton-backend-archetype)
+[![Backend Archetype](https://img.shields.io/maven-central/v/com.campusdual/skeleton-backend-archetype?label=Latest%20backend%20archetype&style=flat-square)](https://central.sonatype.com/artifact/com.campusdual/skeleton-backend-archetype)
+
 
 # SpringBoot Campus Dual archetype base application
 This application is a **base application** which is used to generate the archetype used by Campus Dual students. This means that any changes you want to make to the archetype must be made in this application, which will generate the new archetype from its structure and information. 
@@ -72,7 +73,7 @@ This error occurs becase the command is trying to get the *latest* version (*99.
   </activeProfiles>
 </settings>
 ```
-In case you do not allow the use of SNAPSHOT versions, the latest available release version can be used. In this case, replace the SNAPSHOT version of the archetype (-DarchetypeVersion=99.9.9-SNAPSHOT), with the latest release version, which is the following (without the v): [![Backend Archetype](https://img.shields.io/maven-central/v/com.campusdual/skeleton-backend-archetype?label=&style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.campusdual/skeleton-backend-archetype)
+In case you do not allow the use of SNAPSHOT versions, the latest available release version can be used. In this case, replace the SNAPSHOT version of the archetype (-DarchetypeVersion=99.9.9-SNAPSHOT), with the latest release version, which is the following (without the v): [![Backend Archetype](https://img.shields.io/maven-central/v/com.campusdual/skeleton-backend-archetype?label=&style=flat-square)](https://central.sonatype.com/artifact/com.campusdual/skeleton-backend-archetype)
 
 > **_NOTE:_**  The release version may not have the latest changes made to the archetype.
 
