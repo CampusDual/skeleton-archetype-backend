@@ -42,20 +42,23 @@ jobs:
       - name: Modify settings.xml
         run: |
           cd ~/.m2
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[x:id='central']" -t elem -n "configuration" settings.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[x:id='central']/x:configuration" -t elem -n "repositoryOrigins" settings.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[x:id='central']/x:configuration/x:repositoryOrigins" -t elem -n "repositoryOrigin" -v "https://central.sonatype.com" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers" -t elem -n "server" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[last()]" -t elem -n "id" -v "central-snapshots" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[last()]" -t elem -n "username" -v "${env.MAVEN_USERNAME}" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[last()]" -t elem -n "password" -v "${env.MAVEN_CENTRAL_TOKEN}" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings" -t elem -n "profiles" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles" -t elem -n "profile" settings.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile" -t elem -n "id" -v "central" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile" -t elem -n "id" -v "sonatype-snapshots" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile" -t elem -n "repositories" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories" -t elem -n "repository" settings.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository" -t elem -n "id" -v "central" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository" -t elem -n "id" -v "central-snapshots" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository" -t elem -n "url" -v "https://central.sonatype.com/repository/maven-snapshots/" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository" -t elem -n "snapshots" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository/x:snapshots" -t elem -n "enabled" -v "true" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository" -t elem -n "releases" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository/x:releases" -t elem -n "enabled" -v "false" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings" -t elem -n "activeProfiles" settings.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:activeProfiles" -t elem -n "activeProfile" -v "central" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:activeProfiles" -t elem -n "activeProfile" -v "sonatype-snapshots" settings.xml
       - name: Create changes in project before creating archetype
         run: |
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -d "/x:project/x:properties/x:sonar.organization" pom.xml
@@ -145,7 +148,7 @@ jobs:
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[3]" -t elem -n "version" -v "0.7.0" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[3]" -t elem -n "extensions" -v "true" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[3]" -t elem -n "configuration" pom.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[3]/x:configuration" -t elem -n "publishingServerId" -v "central" pom.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[3]/x:configuration" -t elem -n "publishingServerId" -v "central-snapshots" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[3]/x:configuration" -t elem -n "autoPublish" -v "true" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins" -t elem -n "plugin" pom.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/POM/4.0.0 -s "/x:project/x:profiles/x:profile/x:build/x:plugins/x:plugin[4]" -t elem -n "groupId" -v "org.apache.maven.plugins" pom.xml
