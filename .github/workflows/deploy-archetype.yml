@@ -44,8 +44,8 @@ jobs:
           cd ~/.m2
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers" -t elem -n "server" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[last()]" -t elem -n "id" -v "central-snapshots" settings.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[last()]" -t elem -n "username" -v "${env.MAVEN_USERNAME}" settings.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[last()]" -t elem -n "password" -v "${env.MAVEN_CENTRAL_TOKEN}" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[last()]" -t elem -n "username" -v "$MAVEN_USERNAME" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[last()]" -t elem -n "password" -v "$MAVEN_CENTRAL_TOKEN" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings" -t elem -n "profiles" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles" -t elem -n "profile" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile" -t elem -n "id" -v "sonatype-snapshots" settings.xml
