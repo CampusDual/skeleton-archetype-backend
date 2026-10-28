@@ -42,12 +42,15 @@ jobs:
       - name: Modify settings.xml
         run: |
           cd ~/.m2
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[x:id='central']" -t elem -n "configuration" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[x:id='central']/x:configuration" -t elem -n "repositoryOrigins" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:servers/x:server[x:id='central']/x:configuration/x:repositoryOrigins" -t elem -n "repositoryOrigin" -v "https://central.sonatype.com" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings" -t elem -n "profiles" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles" -t elem -n "profile" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile" -t elem -n "id" -v "central" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile" -t elem -n "repositories" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories" -t elem -n "repository" settings.xml
-          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository" -t elem -n "id" -v "central-snapshot" settings.xml
+          xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository" -t elem -n "id" -v "central" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository" -t elem -n "url" -v "https://central.sonatype.com/repository/maven-snapshots/" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository" -t elem -n "snapshots" settings.xml
           xmlstarlet ed --inplace -N x=http://maven.apache.org/SETTINGS/1.0.0 -s "x:settings/x:profiles/x:profile/x:repositories/x:repository/x:snapshots" -t elem -n "enabled" -v "true" settings.xml
@@ -164,13 +167,13 @@ jobs:
       - name: Deploy archetype
         run: |
           cd target/generated-sources/archetype
-          mvn -B deploy -Pgenerate-version
+          mvn -B deploy -Pgenerate-version -Dmaven.repository.credentialScope=id
       - name: Deploy custom version archetype
         if: "${{ github.event.inputs.custom-version != '' }}"
         run: |
           cd target/generated-sources/archetype
           mvn -B versions:set -DnewVersion=${{ github.event.inputs.custom-version }} versions:commit
-          mvn -B deploy -Pgenerate-version
+          mvn -B deploy -Pgenerate-version -Dmaven.repository.credentialScope=id
       - name: Generating backend from current archetype (Test)
         run: |
           cd /tmp
